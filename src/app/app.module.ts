@@ -14,6 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AuthGuardService } from './auth-guard-service.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +24,7 @@ import { AuthGuardService } from './auth-guard-service.service';
     IonicModule.forRoot(),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireDatabaseModule,
+    FormsModule,
     AngularFireAuthModule,
     AppRoutingModule
   ],

@@ -1,21 +1,24 @@
 <ion-grid>
-  <ion-row justify-content-center>
-    <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
-      <div text-center>
-        <h4>Login Form</h4>
-      </div>
-      <div padding>
-        <ion-item>
-          <ion-input type="text" placeholder="Username"></ion-input>
-        </ion-item>
+  <form (ngSubmit)="onLogin()">
+    <ion-row justify-content-center>
+      <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
+        <div text-center>
+          <h4>Login Form</h4>
+        </div>
+        <div padding>
+          <ion-item>
+            <ion-input type="text" placeholder="Username"></ion-input>
+          </ion-item>
 
-        <ion-item>
-          <ion-input type="password" placeholder="Password"></ion-input>
-        </ion-item>
-      </div>
-      <div padding>
-        <ion-button size="large" href="/touchid" expand="block">Login</ion-button>
-      </div>
-    </ion-col>
-  </ion-row>
+          <ion-item>
+            <ion-input type="password" placeholder="Password"></ion-input>
+          </ion-item>
+        </div>
+        <div padding>
+          <ion-button size="large" type="submit" expand="block">Login</ion-button>
+          <ion-button size="large" href="/register" expand="block">Register</ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </form>
 </ion-grid>
