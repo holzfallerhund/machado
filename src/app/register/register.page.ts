@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from './user';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-register',
@@ -10,7 +11,7 @@ import { User } from './user';
 export class RegisterPage {
   user = new User('', '');
 
-  constructor(private afAuth: AngularFireAuth) {
+  constructor(private afAuth: AngularFireAuth, public navCtrl: NavController) {
   }
 
   async onRegister(user: User) {
@@ -21,4 +22,8 @@ export class RegisterPage {
       )
   }
 
+  voltar()  {
+    this.navCtrl.navigateForward('login');
+  }
+  
 }

@@ -3,7 +3,7 @@ import { User } from '../register/user';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Tab2Page } from '../tab2/tab2.page';
-import { NavController} from '@ionic/angular';
+import { NavController, ToastController} from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -12,11 +12,12 @@ import { NavController} from '@ionic/angular';
 })
 export class LoginPage {
   user = new User('', '');
-
+  error = '';
 
   constructor(
       private afAuth: AngularFireAuth,
-      public navCtrl: NavController
+      public navCtrl: NavController,
+      private toast: ToastController
   ) {
   }
 
@@ -30,6 +31,15 @@ export class LoginPage {
     catch(e){
       console.error(e);
     }
-  }
-
-}
+      finally{
+        this.toast.create({
+            message: 'Usuário ou senha incorretos.',
+            duration: 2000,
+            animated: true,
+            position: "top"
+          }).then((obj) => {
+            obj.present();
+          });
+        }
+      }
+    }

@@ -12,7 +12,7 @@
                 name="email"
                 [(ngModel)]="user.email"
                 #email="ngModel"
-                placeholder="Email">
+                placeholder="E-mail">
             </ion-input>
             </ion-item>
 
@@ -22,17 +22,17 @@
               name="password"
               [(ngModel)]="user.password"
               #password="ngModel"
-              placeholder="Password">
+              placeholder="Senha">
           </ion-input>
             </ion-item>
           </div>
           <div padding>
-            <ion-button size="large" (click)="onLogin(user)">Login</ion-button>
+            <ion-button size="large" expand="block" (click)="onLogin(user)">Entrar</ion-button>
           <ion-button
             size="large"
             href="/register"
             expand="block">
-            Register
+            Registrar
           </ion-button>
           </div>
         </ion-col>
