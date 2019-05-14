@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { User } from '../register/user';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { Tab2Page } from '../tab2/tab2.page';
+import { NavController} from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -9,24 +11,25 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage {
-  model = new User('', '');
+  user = new User('', '');
 
 
   constructor(
       private afAuth: AngularFireAuth,
-      private router: Router
+      public navCtrl: NavController
   ) {
   }
 
-  onLogin() {
-    this.afAuth.auth
-      .signInWithEmailAndPassword(
-        this.model.email,
-        this.model.password
-      ).then((val) => {
-        console.log(val)
-        this.router.navigateByUrl('/tabs')
-      })
+  async onLogin(user: User) {
+    try{  
+      const result = await this.afAuth.auth.signInWithEmailAndPassword(this.user.email,this.user.password);
+      if (result){
+        this.navCtrl.navigateForward('tabs');
+      }
+    }
+    catch(e){
+      console.error(e);
+    }
   }
 
 }

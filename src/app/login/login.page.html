@@ -10,7 +10,7 @@
               <ion-input
                 type="email"
                 name="email"
-                [(ngModel)]="model.email"
+                [(ngModel)]="user.email"
                 #email="ngModel"
                 placeholder="Email">
             </ion-input>
@@ -20,19 +20,14 @@
               <ion-input
               type="password"
               name="password"
-              [(ngModel)]="model.password"
+              [(ngModel)]="user.password"
               #password="ngModel"
               placeholder="Password">
           </ion-input>
             </ion-item>
           </div>
           <div padding>
-            <ion-button
-              size="large"
-              type="submit"
-              expand="block">
-              Login
-          </ion-button>
+            <ion-button size="large" (click)="onLogin(user)">Login</ion-button>
           <ion-button
             size="large"
             href="/register"

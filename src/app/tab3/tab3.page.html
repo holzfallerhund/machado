@@ -23,5 +23,6 @@
       <ion-textarea [(ngModel)]="currentUser.email" name="email"></ion-textarea>
     </ion-item>
     <button ion-button type="submit" block>Salvar perfil</button>
+    <button ion-button (click)="logOut()" block>Log Out</button>
   </form>
 </ion-content>

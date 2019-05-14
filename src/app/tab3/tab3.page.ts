@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { NavController} from '@ionic/angular';
+import { LoginPage } from '../login/login.page';
 
 @Component({
   selector: 'app-tab3',
@@ -13,7 +15,8 @@ export class Tab3Page {
 
   constructor(
     private afAuth: AngularFireAuth,
-    public db: AngularFireDatabase
+    public db: AngularFireDatabase,
+    public navCtrl: NavController
     ){
       //this.userUid = afAuth.auth.currentUser.uid
       console.log(this.afAuth.auth.currentUser)
@@ -29,4 +32,9 @@ export class Tab3Page {
     console.log(this.currentUser)
     this.db.list('profile').push(this.currentUser);
   }
+
+  logOut() {
+    this.afAuth.auth.signOut().then(LoginPage =>this.navCtrl.navigateForward('login')).catch(console.log);
+  }
+
 }

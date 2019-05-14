@@ -8,16 +8,16 @@ import { User } from './user';
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage {
-  model = new User('', '');
+  user = new User('', '');
 
   constructor(private afAuth: AngularFireAuth) {
   }
 
-  onRegister() {
-    this.afAuth.auth
+  async onRegister(user: User) {
+    const result = await this.afAuth.auth
       .createUserWithEmailAndPassword(
-        this.model.email,
-        this.model.password
+        this.user.email,
+        this.user.password
       )
   }
 
