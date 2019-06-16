@@ -1,46 +1,59 @@
-sudo: false
+language: android
+jdk: oraclejdk8
+sudo:false
 
-language: node_js
-node_js:
-  - "5.1"
-
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - g++-4.8
-    - openjdk-8-jdk
-    - lib32stdc++6
-    - lib32z1
 env:
-  CXX=g++-4.8
+  global:
+    - ANDROID_API_LEVEL=28
+    - ANDROID_EMULATOR_LEVEL=18
+    - ANDROID_BUILD_TOOLS_VERSION=28.0.3
+    - ADB_INSTALL_TIMEOUT=20
+    - ANDROID_ABI=armeabi-v7a
+    - ANDROID_TAG=google_apis
+    - QEMU_AUDIO_DRV=none
 
-install:
-  - npm install -g gulp bower cordova ionic
-  - npm install
-  - bower update
+android:
+  components:
+    - tools
+    - platform-tools
+    - tools
+    - build-tools-$ANDROID_BUILD_TOOLS_VERSION
+    - android-$ANDROID_API_LEVEL
+    - android-$ANDROID_EMULATOR_LEVEL
+    - extra-android-support
+    - extra-google-m2repository
+    - extra-android-m2repository
+    - sys-img-$ANDROID_ABI-google-apis-$ANDROID_EMULATOR_LEVEL
 
-before_script:
-  - wget http://dl.google.com/android/android-sdk_r24.4-linux.tgz
-  - tar -xvf android-sdk_r24.4-linux.tgz
-  - echo y | ./android-sdk-linux/tools/android update sdk --no-ui --all --filter platform-tools
-  - echo y | ./android-sdk-linux/tools/android update sdk --no-ui --all --filter build-tools-23.0.2
-  - echo y | ./android-sdk-linux/tools/android update sdk --no-ui --all --filter android-23
-  - echo y | ./android-sdk-linux/tools/android update sdk --no-ui --all --filter extra-android-support
-  - echo y | ./android-sdk-linux/tools/android update sdk --no-ui --all --filter extra-android-m2repository
-  - echo y | ./android-sdk-linux/tools/android update sdk --no-ui --all --filter extra-google-m2repository
-  - export ANDROID_HOME=$PWD/android-sdk-linux
-  - export PATH=${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/23.0.2
+licenses:
+  - android-sdk-preview-license-.+
+  - android-sdk-license-.+
+  - google-gdk-license-.+
+
+cache:
+  directories:
+    - "$HOME/.gradle/caches/"
+    - "$HOME/.gradle/wrapper/"
+    - "$HOME/.android/build-cache/"
+
+before_install:
+  - yes | sdkmanager "cmake;3.10.2.4988404"
+  - wget https://dl.google.com/android/repository/android-ndk-r18b-linux-x86_64.zip
+  - unzip android-ndk-r18b-linux-x86_64.zip -d $HOME > /dev/null
+  - export ANDROID_NDK_HOME=$HOME/android-ndk-r18b
+  - export PATH=$PATH:$ANDROID_NDK_HOME
+  - mkdir "$ANDROID_HOME/licenses" || true
+  - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+  - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
+
+before_script: 
+  - android list targets
+  - echo no | android create avd --force -n test -t "android-"$ANDROID_EMULATOR_LEVEL --abi $ANDROID_ABI --tag $ANDROID_TAG
+  - emulator -avd test -no-window &
+  - android-wait-for-emulator
 
 script:
-- cordova prepare
-
-deploy:
- provider: pages
- skip-cleanup: true
- github-token: $GITHUB_TOKEN 
- keep-history: true
- on:
-   branch: master
- local_dir: www
+  - ./gradlew dependencyCheckAnalyze build 
+  - adb shell input keyevent 82
+  - ./gradlew connectedCheck - PdsiablePreDex --stacktrace
+  
