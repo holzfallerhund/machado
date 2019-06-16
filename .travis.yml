@@ -3,4 +3,4 @@ android:
   components:
     - build-tools-19.0.3
 
-script: ./platforms/android/gradlew testDevelopmentDebug
+script: $HOME/platforms/android/gradlew testDevelopmentDebug
