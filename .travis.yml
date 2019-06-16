@@ -1,46 +1,64 @@
-version: 2
-  jobs:
-    build:
-      docker:
-        - image: circleci/android:api-28-node
-      working_directory: ~/repo
-      environment:
-        JVM_OPTS: - Xmx3200m
-      steps:
-        - checkout
-        - run: 
-            name: "Install gradle"
-            command:
-             - wget https://services.gradle.org/distributions/gradle-4.0.2-bin.zip -P /tmp
-             - sudo unzip -d /opt/gradle /tmp/gradle-*.zip
-             - echo 'export GRADLE_HOME=/opt/gradle/gradle-4.0.2' >> $BASH_ENV
-             - echo 'export PATH=$PATH:/opt/gradle/gradle-4.0.2/bin' >> $BASH_ENV
-             - source $BASH_ENV
-        - run:
-            name: "Install ionic and cordova"
-            command:
-             - sudo npm install -g ionic cordova yarn
-        - run:
-            name: "Install npm pa ckages"
-            command:
-             - yarn install
-        - run:
-            name: "Install Cordova plugins and add android platform"
-            command:
-             - ionic cordova platform add android --noresources
-             - ionic config set -g telemetry true
-        - run:
-            name: "Generate apk"
-            command:
-             - ionic cordova build android --verbose
-             - mkdir -p /tmp/apk
-             - cp -r platforms/android/app/build/outputs/apk/debug/app-debug.apk /tmp/apk
-        - store_artifacts:
-            path: /tmp/apk
-            destination: apks
+branches:
+  only:
+  - master
+matrix:
+  include:
+  - os: linux
+    sudo: false
+    language: android
+    android:
+      components:
+      - tools
+      - platform-tools
+      - tools
+      - build-tools-26.0.0
+      - android-25
+      - extra-google-google_play_services
+      - extra-google-m2repository
+      - extra-android-m2repository
+    addons:
+      apt:
+        sources:
+        - sourceline: deb https://dl.yarnpkg.com/debian/ stable main
+          key_url: https://dl.yarnpkg.com/debian/pubkey.gpg
+        packages:
+        - oracle-java8-installer
+        - oracle-java8-set-default
+        - yarn
+        - jq
+    licenses:
+    - android-sdk-preview-license-.+
+    - android-sdk-license-.+
+    - google-gdk-license-.+
+before_cache:
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -f  $HOME/.gradle/caches/transforms-1/transforms-1.lock
+- rm -rf $HOME/.gradle/caches/3.5/fileHashes/
+- rm -rf $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
+  - $HOME/Library/Caches/Yarn/v1/
+  - $HOME/.cache/yarn/v1/
+before_install:
+- export LANG=en_US.UTF-8
+- nvm install 8
+- yarn global add ionic cordova
 
-  workflows:
-    version: 2
-    build_and_deploy:
-      jobs:
-        - build
+script:
+- yarn install
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ./travis/build-android.sh && ./travis/package-android.sh ; fi
+env:
+  global:
+  - JAVA_HOME=/usr/lib/jvm/java-8-oracle
+deploy:
+  provider: releases
+  api_key:
+    secure: 1WU0Csb0tb7rKRbRE6oV6wBdHozMTE+uWkBMD0RSc9ZVzrl4aravifrUZNq5QPjt13eB8ZuMQTi+6882cyEtr68Uhy8LE/85I86AkyOsxQdnPgoB4fLFuow7fc80+lCH+QLc8HU9XH5Jwx/a9f2HxSv5ZGkluaHkMglGLTTIqE0pKDWfowmyrBCajSHIXNlPPYaEhKHKOmJkFUgn3kwYwPbV3CgYAQXoLOctK6TxvKlKL0FTmNPX3+MVUlY0jzAn9DEV9eXQ8bvomRJC4KQxTSh9xJKCba/C0wgUkO/3EECCPIArrdYHKzFjpXP18SIbvuBQvPoGHUcfClFIKP8G0gXYSCyiMAZ4b3a6CpydMb+PW0zGsEqEHL1EZlhn5cbYZzUfXKIYutO5A8h9dDcrCqOhUIzo2ZOy69sN9oSPPJRrvZOUOo+yzZHSutLI6r5ncVislRIQFw1QDN8HCJAfsDqDz2NcL3bJt8vRgHiI/98lKFIqkErrWwggGASIs0npmBVnlaraTUUW+B08MpkTXLdwcj98X8mMbSDThlNFJUymY7+HJ+YwKtdZ/pjfn7zAXaaPLn2v8Vu5M+uwV+KcVxRqLIRU41jB7DxkBA0Tu3sI6FHbaJwt6BB+xlJXw3d2MLeaJqN1+tc2rb6BiTIlRoRS2k1kqdLQlsvuCmSS+5s=
+  file_glob: true
+  file: output/*
+  skip_cleanup: true
+  overwrite: true
+  on:
+branch: master
