@@ -1,6 +1,14 @@
 language: android
 android:
-  components:
-    - build-tools-19.0.3
-
-script: $HOME/platforms/android/gradlew testDevelopmentDebug
+        components:
+                - platform-tools
+                - build-tools-23.0.1
+                - android-23
+                - extra-android-m2repository
+script:
+        - ./gradlew build
+before_install:
+        - chmod +x gradlew
+branches:
+        only:
+          - master
