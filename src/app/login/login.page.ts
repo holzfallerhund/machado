@@ -30,16 +30,14 @@ export class LoginPage {
     }
     catch(e){
       console.error(e);
+      this.toast.create({
+        message: 'Usuário ou senha incorretos.',
+        duration: 2000,
+        animated: true,
+        position: "top"
+      }).then((obj) => {
+        obj.present();
+      });
     }
-      finally{
-        this.toast.create({
-            message: 'Usuário ou senha incorretos.',
-            duration: 2000,
-            animated: true,
-            position: "top"
-          }).then((obj) => {
-            obj.present();
-          });
-        }
-      }
-    }
+  }
+}
