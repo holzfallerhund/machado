@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Nova Postagem</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+    <ion-input
+      type="text"
+      name="title"
+      [(ngModel)]="post.title"
+      #title="ngModel"
+      placeholder="Título">
+  </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-input
+      type="text"
+      name="subject"
+      [(ngModel)]="post.subject"
+      #subject="ngModel"
+      placeholder="Assunto">
+  </ion-input>
+  </ion-item> 
+
+  <ion-item>
+    <ion-input
+      type="text"
+      name="description"
+      [(ngModel)]="post.description"
+      #description="ngModel"
+      placeholder="Descrição">
+  </ion-input>
+  </ion-item>
+
+  <div padding>
+        <ion-button size="large" expand="block" (click)="newPost()">Enviar</ion-button>
+  </div>
+
+</ion-content>

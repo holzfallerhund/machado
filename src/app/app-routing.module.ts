@@ -10,7 +10,9 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
-  { path: 'register', loadChildren: './register/register.module#RegisterPageModule' }
+  { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
+  { path: 'post/:id', loadChildren: './post/post.module#PostPageModule' },
+  { path: 'new-post', loadChildren: './new-post/new-post.module#NewPostPageModule' }
 ];
 @NgModule({
   imports: [
