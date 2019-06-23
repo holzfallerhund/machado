@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, NavController } from '@ionic/angular';
 
 export interface Item { title: string }
 
@@ -17,12 +17,12 @@ export class PostPage {
 
   private itemsCollection: AngularFirestoreDocument<Item>;
   private item: Observable<Item>
-  private heartType: string;
   private postID: string;
 
   constructor(
     private route : ActivatedRoute, 
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    public navCtrl: NavController
   ) {     
     this.postID = this.route.snapshot.paramMap.get('id')
     this.itemsCollection = afs.doc<Item>('posts/'+this.postID)
@@ -30,9 +30,9 @@ export class PostPage {
 
   }
 
-
-  toggleHeart(){
-    this.heartType = this.heartType === "heart" ? "heart-empty" : "heart"
+  voltar(){
+    this.navCtrl.navigateBack('tabs/tab2');
   }
+  
 
 }

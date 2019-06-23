@@ -46,7 +46,7 @@ export class NewPostPage implements OnInit {
   }
 
   voltar()  {
-    this.navCtrl.navigateForward('tabs/tab2');
+    this.navCtrl.navigateBack('tabs/tab2');
   }
 
 }

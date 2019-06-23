@@ -4,15 +4,15 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class="gray">
     <ion-card>
       <ion-card-content>
         <h1>{{ (item | async)?.title }}</h1>
-        <p>{{ (item | async)?.subject }}</p>
+        <h2>{{ (item | async)?.subject }}</h2>
         <p>{{ (item | async)?.description }}</p>
       </ion-card-content>
-      <ion-item (click)="toggleHeart()">
-          <ion-icon [name]="heartType"></ion-icon>
-      </ion-item>
     </ion-card>
+    <div padding>
+      <ion-button size="large" expand="block" (click)="voltar()">Voltar</ion-button>
+    </div>
 </ion-content>

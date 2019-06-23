@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController} from '@ionic/angular';
 import { PostService } from '../post/post.service';
 import { Observable } from 'rxjs';
+import { PostPage } from '../post/post.page';
 
 @Component({
   selector: 'app-tab2',
@@ -34,6 +35,10 @@ export class Tab2Page implements OnInit{
 
 async newPost() {
   this.navCtrl.navigateForward('new-post');
+}
+
+openPost(postId: string){
+    this.navCtrl.navigateForward('post/'+postId);
 }
 
 }
