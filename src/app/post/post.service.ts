@@ -19,6 +19,7 @@ export class PostService {
  
   read_Posts() {
     return this.firestore.collection('posts').snapshotChanges();
+
   }
  
   update_Post(recordID,record){

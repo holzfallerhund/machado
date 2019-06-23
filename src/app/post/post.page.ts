@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { post } from 'selenium-webdriver/http';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+
+export interface Item { title: string }
 
 @Component({
   selector: 'app-post',
@@ -9,24 +11,23 @@ import { post } from 'selenium-webdriver/http';
   styleUrls: ['./post.page.scss'],
 })
 
-export class PostPage implements OnInit {
 
-  postID: string
-  post
+export class PostPage {
 
-  heartType: string = "heart-empty"
+  private itemsCollection: AngularFirestoreDocument<Item>;
+  item: Observable<Item>
+  heartType: string;
+  postID: string;
 
-  constructor(private route: ActivatedRoute, private afs: AngularFirestore) {
-
-   }
-
-  ngOnInit() {
-    this.postID = this.route.snapshot.paramMap.get("id")
-    this.post = this.afs.doc(`posts/$this.postID`).valueChanges()
+  constructor(private route : ActivatedRoute, private afs: AngularFirestore) {
+    this.postID = this.route.snapshot.paramMap.get('id')
+    this.itemsCollection = afs.doc<Item>('posts/'+this.postID)
+    this.item = this.itemsCollection.valueChanges();
   }
 
+
   toggleHeart(){
-    this.heartType = this.heartType == "heart" ? "heart-empty" : "heart"
+    this.heartType = this.heartType === "heart" ? "heart-empty" : "heart"
   }
 
 }

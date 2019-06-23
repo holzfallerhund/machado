@@ -5,9 +5,11 @@
 </ion-header>
 
 <ion-content padding>
-    <ion-card *ngIf="post | async as postData">
+    <ion-card>
       <ion-card-content>
-        <p>{{ postData.desc }}</p>
+        <h1>{{ (item | async)?.title }}</h1>
+        <p>{{ (item | async)?.subject }}</p>
+        <p>{{ (item | async)?.description }}</p>
       </ion-card-content>
       <ion-item (click)="toggleHeart()">
           <ion-icon [name]="heartType"></ion-icon>

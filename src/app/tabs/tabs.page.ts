@@ -14,9 +14,8 @@ constructor(public alertController: AlertController){
 
   async presentAlert() {
     const alert = await this.alertController.create({
-      header: 'Alert',
-      subHeader: 'Subtitle',
-      message: 'Não',
+      header: 'Não disponível',
+      message: 'Feature de conversa não disponível em MVP',
       buttons: ['OK']
     });
   

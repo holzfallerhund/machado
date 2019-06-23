@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService, Post } from '../post/post.service';
-import { NavController } from '@ionic/angular';
+import { NavController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-new-post',
@@ -12,7 +12,7 @@ export class NewPostPage implements OnInit {
 
   post: Post = { title: "", subject:"", description:""}
 
-  constructor(private postService: PostService,public navCtrl: NavController) { }
+  constructor(private postService: PostService,public navCtrl: NavController, public alertController: AlertController) { }
 
   ngOnInit() {
   }
@@ -31,8 +31,20 @@ export class NewPostPage implements OnInit {
       .catch(error => {
         console.log(error);
       });
+
+      
   }
   
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Sucesso!',
+      message: 'Postagem enviada com sucesso!',
+      buttons: ['OK']
+    });
+  
+    await alert.present();
+  }
+
   voltar()  {
     this.navCtrl.navigateForward('tabs/tab2');
   }
