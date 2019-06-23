@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { LoadingController } from '@ionic/angular';
 
 export interface Item { title: string }
 
@@ -15,14 +16,18 @@ export interface Item { title: string }
 export class PostPage {
 
   private itemsCollection: AngularFirestoreDocument<Item>;
-  item: Observable<Item>
-  heartType: string;
-  postID: string;
+  private item: Observable<Item>
+  private heartType: string;
+  private postID: string;
 
-  constructor(private route : ActivatedRoute, private afs: AngularFirestore) {
+  constructor(
+    private route : ActivatedRoute, 
+    private afs: AngularFirestore
+  ) {     
     this.postID = this.route.snapshot.paramMap.get('id')
     this.itemsCollection = afs.doc<Item>('posts/'+this.postID)
-    this.item = this.itemsCollection.valueChanges();
+    this.item = this.itemsCollection.valueChanges()
+
   }
 
 
