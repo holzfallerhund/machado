@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AuthGuardService } from './auth-guard-service.service';
 import { FormsModule } from '@angular/forms';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,6 +31,7 @@ import { FormsModule } from '@angular/forms';
   ],
   providers: [
     StatusBar,
+    AngularFirestore,
     SplashScreen,
     AuthGuardService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

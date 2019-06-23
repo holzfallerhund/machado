@@ -25,7 +25,7 @@ export class LoginPage {
     try{  
       const result = await this.afAuth.auth.signInWithEmailAndPassword(this.user.email,this.user.password);
       if (result){
-        this.navCtrl.navigateForward('tabs');
+        this.navCtrl.navigateForward('tabs/tab2');
       }
     }
     catch(e){

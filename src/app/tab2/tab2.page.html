@@ -8,15 +8,17 @@
 
 <ion-content>
     <div padding>
-        <ion-button size="large" expand="block" (click)="newPost()">Novo Post</ion-button>
+        <ion-button size="large" expand="block" (click)="newPost()">Nova Postagem</ion-button>
     </div>
     
     <ion-list>
-    <ion-item-sliding *ngFor="let post of posts | async">
-        <ion-item>
-          <h1>{{ post.title }}</h1>
-          <p>{{ post.subject }}</p>
-        </ion-item>
+    <ion-item-sliding *ngFor="let post of posts">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{ post.title }}</ion-card-title>
+          <ion-card-subtitle>{{ post.subject }}</ion-card-subtitle>
+        </ion-card-header>
+      </ion-card>
     </ion-item-sliding>
   </ion-list>
 </ion-content>

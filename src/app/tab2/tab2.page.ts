@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController} from '@ionic/angular';
-import { Post } from '../post/post';
+import { PostService } from '../post/post.service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -9,14 +9,26 @@ import { Observable } from 'rxjs';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page implements OnInit{
-  ngOnInit(): void {
-    this.posts = this.provider.getAll();
+  posts
+ 
+  ngOnInit() {
+    this.provider.read_Posts().subscribe(data => {
+  
+      this.posts = data.map(e => {
+        return {
+          id: e.payload.doc.id,
+          title: e.payload.doc.data()['title'],
+          subject: e.payload.doc.data()['subject'],
+          description: e.payload.doc.data()['description'],
+        };
+      })
+      console.log(this.posts);
+  
+    });
   }
 
-  posts: Observable<any>;
-
   constructor(
-    public navCtrl: NavController, private provider: Post
+    public navCtrl: NavController, private provider: PostService
 ) {
 }
 
