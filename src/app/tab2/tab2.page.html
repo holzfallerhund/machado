@@ -10,14 +10,13 @@
     <div padding>
         <ion-button size="large" expand="block" (click)="newPost()">Novo Post</ion-button>
     </div>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-subtitle>Luiz Machato</ion-card-subtitle>
-      <ion-card-title>Sou chato</ion-card-title>
-    </ion-card-header>
-
-    <ion-card-content>
-      Todo mundo me acusa e eu não sei o que fazer....(limitar quantidade de letras)
-    </ion-card-content>
-  </ion-card>
+    
+    <ion-list>
+    <ion-item-sliding *ngFor="let post of posts | async">
+        <ion-item>
+          <h1>{{ post.title }}</h1>
+          <p>{{ post.subject }}</p>
+        </ion-item>
+    </ion-item-sliding>
+  </ion-list>
 </ion-content>
