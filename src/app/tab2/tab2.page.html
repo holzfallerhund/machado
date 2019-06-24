@@ -7,14 +7,18 @@
 </ion-header>
 
 <ion-content>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-subtitle>Luiz Machato</ion-card-subtitle>
-      <ion-card-title>Sou chato</ion-card-title>
-    </ion-card-header>
-
-    <ion-card-content>
-      Todo mundo me acusa e eu não sei o que fazer....(limitar quantidade de letras)
-    </ion-card-content>
-  </ion-card>
+    <div padding>
+        <ion-button size="large" expand="block" (click)="newPost()">Nova Postagem</ion-button>
+    </div>
+    
+    <ion-list>
+    <ion-item-sliding *ngFor="let post of posts">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title (click)="openPost(post.id)">{{ post.title }}</ion-card-title>
+          <ion-card-subtitle>{{ post.subject }}</ion-card-subtitle>
+        </ion-card-header>
+      </ion-card>
+    </ion-item-sliding>
+  </ion-list>
 </ion-content>

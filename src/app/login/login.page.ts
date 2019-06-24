@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { User } from '../register/user';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { Tab2Page } from '../tab2/tab2.page';
+import { NavController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -9,24 +11,31 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage {
-  model = new User('', '');
-
+  user = new User('', '');
+  error = '';
 
   constructor(
-      private afAuth: AngularFireAuth,
-      private router: Router
+    private afAuth: AngularFireAuth,
+    public navCtrl: NavController,
+    private toast: ToastController
   ) {
   }
 
-  onLogin() {
-    this.afAuth.auth
-      .signInWithEmailAndPassword(
-        this.model.email,
-        this.model.password
-      ).then((val) => {
-        console.log(val)
-        this.router.navigateByUrl('/tabs')
-      })
+  async onLogin() {
+    try {
+      const result = await this.afAuth.auth.signInWithEmailAndPassword(this.user.email, this.user.password);
+      if (result) {
+        this.navCtrl.navigateForward('tabs/tab2');
+      }
+    } catch (e) {
+      this.toast.create({
+        message: 'Usuário ou senha incorretos.',
+        duration: 2000,
+        animated: true,
+        position: 'top'
+      }).then((obj) => {
+        obj.present();
+      });
+    }
   }
-
 }

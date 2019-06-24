@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { NavController} from '@ionic/angular';
+import { LoginPage } from '../login/login.page';
+
+interface IUser {
+  email: string;
+}
 
 @Component({
   selector: 'app-tab3',
@@ -8,25 +14,9 @@ import { AngularFireAuth } from '@angular/fire/auth';
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
-  currentUser: {}
-  userUid: {}
+  currentUser: IUser = {
+    email: ''
+  };
 
-  constructor(
-    private afAuth: AngularFireAuth,
-    public db: AngularFireDatabase
-    ){
-      //this.userUid = afAuth.auth.currentUser.uid
-      console.log(this.afAuth.auth.currentUser)
-  }
-
-  ngOnInit() {
-    this.currentUser = {}
-    this.userUid = this.afAuth.auth.currentUser.uid
-    console.log(this.afAuth.auth.currentUser)
-  }
-
-  onSaveProfile() {
-    console.log(this.currentUser)
-    this.db.list('profile').push(this.currentUser);
-  }
+  constructor() {}
 }

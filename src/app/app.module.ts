@@ -15,6 +15,9 @@ import { AppComponent } from './app.component';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AuthGuardService } from './auth-guard-service.service';
 import { FormsModule } from '@angular/forms';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,10 +29,12 @@ import { FormsModule } from '@angular/forms';
     AngularFireDatabaseModule,
     FormsModule,
     AngularFireAuthModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     StatusBar,
+    AngularFirestore,
     SplashScreen,
     AuthGuardService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

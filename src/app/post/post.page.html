@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>post</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding class="gray">
+    <ion-card>
+      <ion-card-content>
+        <h1>{{ (item | async)?.title }}</h1>
+        <h2>{{ (item | async)?.subject }}</h2>
+        <p>{{ (item | async)?.description }}</p>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-title>Comentários</ion-card-title>
+      <ion-item-sliding *ngFor="let comment of comments">
+        <ion-card>
+          <ion-card-header>
+            <h1>{{ comment.commentContent }}</h1>
+          </ion-card-header>
+        </ion-card>
+      </ion-item-sliding>
+    </ion-card>
+
+    <div padding>
+        <ion-item>
+            <ion-input
+              type="text"
+              name="comment"
+              [(ngModel)]="newcomment.commmentContent"
+              #commmentContent="ngModel"
+              placeholder="Comentário">
+          </ion-input>
+        </ion-item>
+      <ion-button size="large" expand="block" (click)="comment()">Comentar</ion-button>
+    </div>
+
+    <div padding>
+      <ion-button size="large" expand="block" (click)="voltar()">Voltar</ion-button>
+    </div>
+</ion-content>
