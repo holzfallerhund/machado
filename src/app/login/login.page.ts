@@ -21,7 +21,7 @@ export class LoginPage {
   ) {
   }
 
-  async onLogin(user: User) {
+  async onLogin() {
     try{  
       const result = await this.afAuth.auth.signInWithEmailAndPassword(this.user.email,this.user.password);
       if (result){

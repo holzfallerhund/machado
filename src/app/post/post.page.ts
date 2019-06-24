@@ -17,7 +17,7 @@ export interface Item { title: string }
 export class PostPage {
 
   private itemsCollection: AngularFirestoreDocument<Item>;
-  private item: Observable<Item>;
+  public item: Observable<Item>;
   private postID: string;
   comments;
   newcomment: IComment =  {  commmentContent: "", postId: "" }
@@ -40,9 +40,7 @@ export class PostPage {
           commentContent: e.payload.doc.data()['comment'],
           commentPostId: e.payload.doc.data()['postId'],
         };
-      })
-      console.log(this.comments);
-  
+      }) 
     });
 
   }

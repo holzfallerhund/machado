@@ -7,22 +7,8 @@
 </ion-header>
 
 <ion-content>
-  <div class="user-photo" padding-top>
-    <ion-avatar>
-      <img [src]="currentUser.photoURL">
-    </ion-avatar>
-  </div>
-  {{ userUid }}
-  <form (ngSubmit)="onSaveProfile()">
-    <ion-item>
-      <ion-label>Seu nome</ion-label>
-      <ion-input type="text" [(ngModel)]="currentUser.displayName" name="displayName"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>E-Mail</ion-label>
-      <ion-textarea [(ngModel)]="currentUser.email" name="email"></ion-textarea>
-    </ion-item>
-    <button ion-button type="submit" block>Salvar perfil</button>
-    <button ion-button (click)="logOut()" block>Log Out</button>
-  </form>
+  <ion-item>
+    <ion-label>E-Mail</ion-label>
+    <ion-textarea [(ngModel)]="currentUser.email" name="email"></ion-textarea>
+  </ion-item>
 </ion-content>
