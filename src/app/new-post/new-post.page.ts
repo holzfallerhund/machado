@@ -10,38 +10,37 @@ import { NavController, AlertController } from '@ionic/angular';
 
 export class NewPostPage implements OnInit {
 
-  post: Post = { title: "", subject:"", description:""}
+  post: Post = { title: '', subject: '', description: ''};
 
-  constructor(private postService: PostService,public navCtrl: NavController, public alertController: AlertController) { }
+  constructor(private postService: PostService, public navCtrl: NavController, public alertController: AlertController) { }
 
   ngOnInit() {
   }
 
-  newPost(){
-    let record = {};
+  newPost() {
+    const record = {};
     record['title'] = this.post.title;
     record['subject'] = this.post.subject;
     record['description'] = this.post.description;
     this.postService.create_NewPost(record).then(resp => {
-      this.post.title = "";
-      this.post.subject = "";
-      this.post.description = "";
+      this.post.title = '';
+      this.post.subject = '';
+      this.post.description = '';
       console.log(resp);
     })
       .catch(error => {
         console.log(error);
       });
 
-      
+
   }
-  
+
   async presentAlert() {
     const alert = await this.alertController.create({
       header: 'Sucesso!',
       message: 'Postagem enviada com sucesso!',
       buttons: ['OK']
     });
-  
     await alert.present();
   }
 

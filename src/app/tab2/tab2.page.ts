@@ -9,12 +9,12 @@ import { PostPage } from '../post/post.page';
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss']
 })
-export class Tab2Page implements OnInit{
-  posts
- 
+export class Tab2Page implements OnInit {
+  posts;
+
   ngOnInit() {
     this.provider.read_Posts().subscribe(data => {
-  
+
       this.posts = data.map(e => {
         return {
           id: e.payload.doc.id,
@@ -22,9 +22,9 @@ export class Tab2Page implements OnInit{
           subject: e.payload.doc.data()['subject'],
           description: e.payload.doc.data()['description'],
         };
-      })
+      });
       console.log(this.posts);
-  
+
     });
   }
 
@@ -37,8 +37,8 @@ async newPost() {
   this.navCtrl.navigateForward('new-post');
 }
 
-openPost(postId: string){
-    this.navCtrl.navigateForward('post/'+postId);
+openPost(postId: string) {
+    this.navCtrl.navigateForward('post/' + postId);
 }
 
 }

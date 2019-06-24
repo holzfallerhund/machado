@@ -8,8 +8,8 @@ import { AlertController } from '@ionic/angular';
 })
 export class TabsPage {
 
-constructor(public alertController: AlertController){
-  
+constructor(public alertController: AlertController) {
+
 }
 
   async presentAlert() {
@@ -18,7 +18,7 @@ constructor(public alertController: AlertController){
       message: 'Feature de conversa não disponível em MVP',
       buttons: ['OK']
     });
-  
+
     await alert.present();
   }
 

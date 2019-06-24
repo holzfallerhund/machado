@@ -5,7 +5,7 @@ import { NavController} from '@ionic/angular';
 import { LoginPage } from '../login/login.page';
 
 interface IUser {
-  email: string
+  email: string;
 }
 
 @Component({
@@ -16,7 +16,7 @@ interface IUser {
 export class Tab3Page {
   currentUser: IUser = {
     email: ''
-  }
+  };
 
-  constructor(){}
+  constructor() {}
 }

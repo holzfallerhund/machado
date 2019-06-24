@@ -26,9 +26,8 @@ export class RegisterPage {
         .createUserWithEmailAndPassword(
           this.user.email,
           this.user.password
-        )
-    }
-    catch (e) {
+        );
+    } catch (e) {
       this.registerError = 1;
       console.error(this.registerError);
       console.error(e);
@@ -36,12 +35,12 @@ export class RegisterPage {
         message: 'E-mail mal formatado ou senha menor que 6 dígitos!',
         duration: 2000,
         animated: true,
-        position: "top"
+        position: 'top'
       }).then((obj) => {
         obj.present();
       });
     }
-    if (this.registerError == 0) { this.navCtrl.navigateForward('login') }
+    if (this.registerError === 0) { this.navCtrl.navigateForward('login'); }
   }
 
   voltar() {
