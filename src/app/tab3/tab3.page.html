@@ -7,8 +7,21 @@
 </ion-header>
 
 <ion-content>
-  <ion-item>
-    <ion-label>E-Mail</ion-label>
-    <ion-textarea [(ngModel)]="currentUser.email" name="email"></ion-textarea>
+  <div padding>
+    <ion-item>
+        <ion-input
+          type="text"
+          name="email"
+          placeholder="e-mail">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        type="text"
+        name="nome"
+        placeholder="Nome">
+    </ion-input>
   </ion-item>
+  <ion-button size="large" expand="block">Salvar</ion-button>
+</div>
 </ion-content>
