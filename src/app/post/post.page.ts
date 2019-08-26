@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { LoadingController, NavController } from '@ionic/angular';
+import { LoadingController, NavController, ToastController } from '@ionic/angular';
 import { IComment, CommentService } from './comment.service';
 
 export interface Item { title: string; }
@@ -26,7 +26,8 @@ export class PostPage {
     private route: ActivatedRoute,
     private afs: AngularFirestore,
     public navCtrl: NavController,
-    private provider: CommentService
+    private provider: CommentService,
+    private toast: ToastController
   ) {
     this.postID = this.route.snapshot.paramMap.get('id');
     this.itemsCollection = afs.doc<Item>('posts/' + this.postID);
@@ -51,6 +52,16 @@ export class PostPage {
 
   comment() {
     const record = {};
+    if (this.newcomment.commmentContent == ''){
+      this.toast.create({
+        message: 'Comentário em branco!',
+        duration: 2000,
+        animated: true,
+        position: 'top'
+      }).then((obj) => {
+        obj.present();
+      });
+    }
     record['comment'] = this.newcomment.commmentContent;
     record['postId'] = this.postID;
     this.provider.create_NewComment(record).then(resp => {
