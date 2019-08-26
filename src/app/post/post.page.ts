@@ -52,7 +52,19 @@ export class PostPage {
 
   comment() {
     const record = {};
-    if (this.newcomment.commmentContent == ''){
+
+    if (this.newcomment.commmentContent){
+      record['comment'] = this.newcomment.commmentContent;
+      record['postId'] = this.postID;
+      this.provider.create_NewComment(record).then(resp => {
+        this.newcomment.commmentContent = '';
+        console.log(resp);
+      })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+    else{
       this.toast.create({
         message: 'Comentário em branco!',
         duration: 2000,
@@ -62,16 +74,5 @@ export class PostPage {
         obj.present();
       });
     }
-    record['comment'] = this.newcomment.commmentContent;
-    record['postId'] = this.postID;
-    this.provider.create_NewComment(record).then(resp => {
-      this.newcomment.commmentContent = '';
-      console.log(resp);
-    })
-      .catch(error => {
-        console.log(error);
-      });
-
-
-  }
+    }
 }
